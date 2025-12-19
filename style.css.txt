@@ -1,0 +1,129 @@
+/*
+Theme Name: Porto Child
+Theme URI: https://www.portotheme.com/wordpress/porto
+Author: P-THEMES
+Author URI: https://www.portotheme.com/
+Description: Porto Responsive WordPress + eCommerce Theme.
+Version: 1.1
+Template: porto
+License: Commercial
+License URI: http://themeforest.net/licenses/regular_extended
+Tags: woocommerce, corporate, ecommerce, responsive, blue, black, green, white, light, dark, red, two-columns, three-columns, four-columns, left-sidebar, right-sidebar, fixed-layout, responsive-layout, custom-menu, editor-style, featured-images, flexible-header, full-width-template, microformats, post-formats, rtl-language-support, sticky-post, theme-options, translation-ready, accessibility-ready
+*/
+
+/*************** ADD YOUR CUSTOM CSS HERE  ***************/
+.mfp-close, .mfp-close-btn-in .mfp-close{color: #000; width: 50px; height: 50px;}
+.single_add_to_cart_button, .view-cart-btn{
+    font-weight: 400;
+}
+.product-summary-wrap .single_add_to_cart_button{
+    border-radius: 8px;
+}
+.filter-item-list .filter-item, .woocommerce-widget-layered-nav-list a:not(.filter-color){
+    border: 1px solid rgba(0, 0, 0, .25);
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 400;
+    margin: 3px 10px 3px 0;
+}
+.filter-item-list .active .filter-item, .filter-item-list .filter-item:not(.disabled):hover, .woocommerce-widget-layered-nav-list .chosen a:not(.filter-color){
+    border-color: #000;
+    background: none;
+    color: #000;
+}
+.post-type-archive-faq #main .container{max-width: 1400px;}
+
+#login-form-popup .featured-box{
+    /*background: url(/images/loginbg.jpg);*/
+    background-size: cover;
+    padding: 50px;
+    border-radius: 30px;
+}
+#login-form-popup .featured-box .box-content{
+    background: #fff;
+    border-radius: 20px;
+    padding: 30px 36px 20px;
+}
+#login-form-popup .login-btn{
+    background: linear-gradient(270deg, #3d3d3d 0%, #3d3d3d 100%);
+    border-radius: 266px;
+}
+@media (max-width:992px){
+    #login-form-popup .featured-box{
+        padding: 20px 10px;
+    }
+    #login-form-popup .featured-box .box-content{
+        padding: 15px;
+    }
+}
+.custom-login-text{font-weight:600; color:#3d3d3d}
+
+#user-registration{margin:30px auto}
+.checkout-order-review .custom-coupon-at-order-top.my-coupon:not(:has(form.checkout_coupon)) {
+    display:none !important;
+}
+
+.woocommerce-account .box-with-icon .col-md-4:has(.icon-featured.Simple-Line-Icons-cloud-download) {
+    display: none;
+}
+.share-links .share-instagram{
+    background-color: #000;
+}
+#side-nav-panel{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.porto-wide-sub-menu li.sub li.menu-item>a{margin-left: 0;}
+.share-tiktok {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+}
+.share-tiktok::before {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-size: contain;
+    background-repeat: no-repeat;
+
+    background-image: url("data:image/svg+xml;utf8,<svg fill='currentColor' viewBox='0 0 48 48' xmlns='http://www.w3.org/2000/svg'><path d='...' /></svg>");
+}
+
+/*
+ * 
+ * remove view cart
+*/
+a.added_to_cart.wc_forward{
+display: none important!;
+}
+
+
+
+
+add_filter( 'woocommerce_checkout_fields', 'bbloomer_shipping_phone_checkout' );
+
+function bbloomer_shipping_phone_checkout( $fields ) {
+   $fields['shipping']['shipping_phone'] = array(
+      'label' => 'Phone',
+      'type' => 'tel',
+      'required' => false,
+      'class' => array( 'form-row-wide' ),
+      'validate' => array( 'phone' ),
+      'autocomplete' => 'tel',
+      'priority' => 25,
+   );
+   return $fields;
+}
+  
+add_action( 'woocommerce_admin_order_data_after_shipping_address', 'bbloomer_shipping_phone_checkout_display' );
+ 
+function bbloomer_shipping_phone_checkout_display( $order ){
+    echo '<p><b>Shipping Phone:</b> ' . get_post_meta( $order->get_id(), '_shipping_phone', true ) . '</p>';
+}
+		
+
+
+			
